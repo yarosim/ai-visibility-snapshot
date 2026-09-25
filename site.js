@@ -24,13 +24,10 @@
     }
   });
 
-  var orderLead = document.getElementById("order-lead");
-  if (orderLead && pay) {
-    orderLead.textContent = "Pay the $497 at checkout, then complete this intake. It is emailed to pnsgloballlc@gmail.com. No passwords or system access. The report is delivered within 48 hours of your completed intake form.";
-  }
-
-  var orderPay = document.getElementById("order-pay");
-  if (orderPay) orderPay.hidden = !pay;
+  var payStepLink = document.getElementById("pay-step-link");
+  var payStepFallback = document.getElementById("pay-step-fallback");
+  if (payStepLink) payStepLink.hidden = !pay;
+  if (payStepFallback) payStepFallback.hidden = !!pay;
 
   if (pay) {
     document.querySelectorAll('script[type="application/ld+json"]').forEach(function (node) {
@@ -82,26 +79,70 @@
         return;
       }
 
+      var competitor = form.elements.namedItem("competitor");
+      if (competitor && competitor.form === form) {
+        var parts = String(competitor.value || "").split(",").map(function (item) {
+          return item.trim();
+        }).filter(Boolean);
+        competitor.setCustomValidity(parts.length > 3 ? "Enter up to 3 competitors, separated by commas." : "");
+      }
+
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
+      function fieldValue(name) {
+        var el = form.elements.namedItem(name);
+        if (!el || el.form !== form) return "";
+        if (el.type === "checkbox") return el.checked ? String(el.value || "yes") : "";
+        return String(el.value || "").trim();
+      }
+
+      function oneLine(value) {
+        return String(value || "").replace(/\s+/g, " ").trim();
+      }
+
+      function setHidden(name, value) {
+        var el = form.elements.namedItem(name);
+        if (!el || el.form !== form) {
+          el = document.createElement("input");
+          el.type = "hidden";
+          el.name = name;
+          form.appendChild(el);
+        }
+        el.value = value;
+      }
+
+      var formType = fieldValue("form_type");
+      var schemas = {
+        snapshot_order: ["company", "legal_name", "website", "uei", "city_state", "service", "service_2", "naics", "cert", "region", "agency", "vehicle", "competitor", "problem", "contact_name", "email", "phone", "consent"],
+        mini_check: ["name", "email", "website", "company"],
+        question: ["name", "email", "company", "message"]
+      };
+      var keys = schemas[formType];
+      if (keys) {
+        var payload = {};
+        keys.forEach(function (key) {
+          payload[key] = fieldValue(key);
+        });
+        setHidden("intake_json", JSON.stringify(payload));
+      }
+      if (formType === "snapshot_order") {
+        setHidden("intake_date", new Date().toISOString());
+        setHidden("_subject", "[SNAPSHOT-ORDER] " + oneLine(fieldValue("company")));
+      } else if (formType === "mini_check") {
+        setHidden("_subject", "[MINI-CHECK] " + oneLine(fieldValue("website")));
+      } else if (formType === "question") {
+        setHidden("_subject", "[QUESTION] " + oneLine(fieldValue("name")));
+      }
+      if (fieldValue("email")) setHidden("_replyto", fieldValue("email"));
+
       var data = {};
       new FormData(form).forEach(function (value, key) {
         if (key === "_honey" || typeof value !== "string") return;
-        var trimmed = value.trim();
-        if (!trimmed && key.charAt(0) !== "_") return;
-        data[key] = key.charAt(0) === "_" ? value : trimmed;
+        data[key] = value.trim();
       });
-
-      var emailInput = form.querySelector('input[type="email"]');
-      if (emailInput && emailInput.value.trim()) data._replyto = emailInput.value.trim();
-
-      var company = data["Company name"] || data["Company"] || data["Company website"] || "";
-      var person = data["Name"] || data["Contact name"] || "";
-      if (data._subject && company) data._subject = data._subject + " — " + company;
-      else if (data._subject && person) data._subject = data._subject + " — " + person;
 
       if (button) button.disabled = true;
       form.setAttribute("aria-busy", "true");

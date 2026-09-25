@@ -180,63 +180,99 @@
 <section id="order">
   <div class="wrap">
     <h2 id="order-title">Request your Snapshot</h2>
-    <p id="order-lead">Request your Snapshot with this form. We’ll reply by email to arrange the $497 payment. No passwords or system access. The report is delivered within 48 hours of your completed intake form.</p>
-    <p id="order-pay" hidden><a class="btn" href="#order" data-pay data-fallback="#order">Pay $497 at checkout</a></p>
+    <p id="order-lead">Send this intake to pnsgloballlc@gmail.com. No passwords or system access.</p>
+    <h3>What happens next</h3>
+    <ol class="steps">
+      <li><strong>Submit this intake.</strong></li>
+      <li><strong>Pay $497.</strong> <span id="pay-step-fallback">We’ll email you to arrange payment.</span><a id="pay-step-link" href="#order" data-pay data-fallback="#order" hidden>Open checkout</a></li>
+      <li><strong>Report delivered by email</strong> within 48 hours.</li>
+      <li><strong>Optional 20-minute walkthrough</strong> of the report, if you want one.</li>
+    </ol>
     <div class="card form-card">
       <form class="lead-form" data-form="order" action="https://formsubmit.co/pnsgloballlc@gmail.com" method="POST" accept-charset="UTF-8" aria-labelledby="order-title">
-        <input type="hidden" name="_subject" value="Snapshot order intake">
+        <input type="hidden" name="_subject" value="[SNAPSHOT-ORDER]">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_autoresponse" value="Thanks, we received your request. Your Snapshot is delivered within 48 hours of a completed intake and payment. Reply to this email with any questions.">
         <input type="hidden" name="_next" value="https://yarosim.github.io/ai-visibility-snapshot/thank-you.html?form=order">
-        <input type="hidden" name="Form" value="Snapshot order intake">
+        <input type="hidden" name="form_type" value="snapshot_order">
+        <input type="hidden" name="intake_date" value="">
+        <input type="hidden" name="intake_json" value="">
         <input type="hidden" name="Page" value="https://yarosim.github.io/ai-visibility-snapshot/">
         <p class="fine">Fields marked with * are required.</p>
         <div class="fields cols">
           <div class="field">
-            <label for="order-company">Company name <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-company" name="Company name" type="text" autocomplete="organization" required maxlength="200">
+            <label for="order-company">Company <span class="req" aria-hidden="true">*</span></label>
+            <input id="order-company" name="company" type="text" autocomplete="organization" required maxlength="200">
+          </div>
+          <div class="field">
+            <label for="order-legal">Legal name <span class="fine">(optional)</span></label>
+            <input id="order-legal" name="legal_name" type="text" autocomplete="organization" maxlength="200">
           </div>
           <div class="field">
             <label for="order-website">Website <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-website" name="Website" type="text" inputmode="url" autocomplete="url" placeholder="https://yourfirm.com" required maxlength="300">
+            <input id="order-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="https://yourfirm.com" required maxlength="300">
           </div>
           <div class="field">
-            <label for="order-uei">UEI <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-uei" name="UEI" type="text" autocomplete="off" spellcheck="false" required maxlength="20" aria-describedby="order-uei-hint">
+            <label for="order-uei">UEI <span class="fine">(optional)</span></label>
+            <input id="order-uei" name="uei" type="text" autocomplete="off" spellcheck="false" maxlength="20" aria-describedby="order-uei-hint">
             <span class="hint" id="order-uei-hint">12-character SAM Unique Entity ID.</span>
           </div>
           <div class="field">
+            <label for="order-city">City and state <span class="fine">(optional)</span></label>
+            <input id="order-city" name="city_state" type="text" autocomplete="address-level2" maxlength="120">
+          </div>
+          <div class="field">
             <label for="order-naics">Primary NAICS <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-naics" name="Primary NAICS" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" required pattern="[0-9]{6}" title="6-digit NAICS code" maxlength="6" aria-describedby="order-naics-hint">
+            <input id="order-naics" name="naics" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" required pattern="[0-9]{6}" title="6-digit NAICS code" maxlength="6" aria-describedby="order-naics-hint">
             <span class="hint" id="order-naics-hint">6-digit code.</span>
           </div>
           <div class="field full">
-            <label for="order-services">Services in plain words <span class="req" aria-hidden="true">*</span></label>
-            <textarea id="order-services" name="Services" required maxlength="4000" aria-describedby="order-services-hint"></textarea>
-            <span class="hint" id="order-services-hint">What you do, in words a buyer would use.</span>
+            <label for="order-service">Main service in plain words <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="order-service" name="service" required maxlength="4000" aria-describedby="order-service-hint"></textarea>
+            <span class="hint" id="order-service-hint">What you do, in words a buyer would use.</span>
+          </div>
+          <div class="field full">
+            <label for="order-service-2">Second service <span class="fine">(optional)</span></label>
+            <input id="order-service-2" name="service_2" type="text" maxlength="300">
           </div>
           <div class="field">
-            <label for="order-certs">Certifications <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-certs" name="Certifications" type="text" required maxlength="300" aria-describedby="order-certs-hint">
-            <span class="hint" id="order-certs-hint">Only certifications you actually hold. Write none if you have none.</span>
+            <label for="order-cert">Certification <span class="req" aria-hidden="true">*</span></label>
+            <select id="order-cert" name="cert" required>
+              <option value="">Select one</option>
+              <option>8(a)</option>
+              <option>SDVOSB</option>
+              <option>WOSB</option>
+              <option>EDWOSB</option>
+              <option>HUBZone</option>
+              <option>Small business / none</option>
+              <option>Other</option>
+            </select>
           </div>
           <div class="field">
-            <label for="order-agencies">Target agencies <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-agencies" name="Target agencies" type="text" required maxlength="300">
+            <label for="order-region">Region <span class="fine">(optional)</span></label>
+            <input id="order-region" name="region" type="text" maxlength="120">
           </div>
           <div class="field">
-            <label for="order-vehicles">Contract vehicles <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-vehicles" name="Contract vehicles" type="text" required maxlength="300" aria-describedby="order-vehicles-hint">
-            <span class="hint" id="order-vehicles-hint">Write none if you do not hold one.</span>
+            <label for="order-agency">Main target agency <span class="req" aria-hidden="true">*</span></label>
+            <input id="order-agency" name="agency" type="text" required maxlength="200">
           </div>
           <div class="field">
-            <label for="order-competitors">Competitors, up to 3 <span class="req" aria-hidden="true">*</span></label>
-            <textarea id="order-competitors" name="Competitors" required maxlength="1000" aria-describedby="order-competitors-hint"></textarea>
-            <span class="hint" id="order-competitors-hint">One per line, up to 3. Write none if you have none in mind.</span>
+            <label for="order-vehicle">Contract vehicles <span class="fine">(optional)</span></label>
+            <input id="order-vehicle" name="vehicle" type="text" maxlength="300">
+          </div>
+          <div class="field full">
+            <label for="order-competitor">Competitors <span class="fine">(optional, up to 3)</span></label>
+            <input id="order-competitor" name="competitor" type="text" maxlength="500" aria-describedby="order-competitor-hint">
+            <span class="hint" id="order-competitor-hint">Up to 3, separated by commas.</span>
+          </div>
+          <div class="field full">
+            <label for="order-problem">Buyer problem you solve <span class="fine">(optional)</span></label>
+            <textarea id="order-problem" name="problem" maxlength="2000"></textarea>
           </div>
           <div class="field">
             <label for="order-contact">Contact name <span class="req" aria-hidden="true">*</span></label>
-            <input id="order-contact" name="Contact name" type="text" autocomplete="name" required maxlength="200">
+            <input id="order-contact" name="contact_name" type="text" autocomplete="name" required maxlength="200">
           </div>
           <div class="field">
             <label for="order-email">Email <span class="req" aria-hidden="true">*</span></label>
@@ -244,18 +280,18 @@
           </div>
           <div class="field full">
             <label for="order-phone">Phone <span class="fine">(optional)</span></label>
-            <input id="order-phone" name="Phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40">
+            <input id="order-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40">
           </div>
           <div class="field full">
             <div class="consent">
-              <input id="order-consent" name="Consent to contact" type="checkbox" value="Yes" required>
+              <input id="order-consent" name="consent" type="checkbox" value="yes" required>
               <label for="order-consent">I agree to be contacted about this Snapshot request at the email and phone I provided. <span class="req" aria-hidden="true">*</span></label>
             </div>
           </div>
         </div>
         <div class="form-status" role="status" aria-live="polite" tabindex="-1"></div>
         <button class="btn" type="submit">Request my Snapshot</button>
-        <p class="fine">Or email <a href="mailto:pnsgloballlc@gmail.com?subject=Snapshot%20order%20intake">pnsgloballlc@gmail.com</a>. <a href="privacy.html">Privacy</a></p>
+        <p class="fine">Or email <a href="mailto:pnsgloballlc@gmail.com?subject=%5BSNAPSHOT-ORDER%5D">pnsgloballlc@gmail.com</a>. <a href="privacy.html">Privacy</a></p>
         <p class="hp" aria-hidden="true">
           <label for="order-hp">Leave this field blank</label>
           <input id="order-hp" name="_honey" type="text" tabindex="-1" autocomplete="off" value="">
@@ -271,16 +307,18 @@
       <h2 class="form-title" id="ask-title">Ask a question</h2>
       <p>Questions about the Snapshot, the Fix Sprint, or the retainer go to pnsgloballlc@gmail.com.</p>
       <form class="lead-form" data-form="ask" action="https://formsubmit.co/pnsgloballlc@gmail.com" method="POST" accept-charset="UTF-8" aria-labelledby="ask-title">
-        <input type="hidden" name="_subject" value="AI Visibility Snapshot question">
+        <input type="hidden" name="_subject" value="[QUESTION]">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_autoresponse" value="Thanks, we received your question. Reply to this email if you need to add anything.">
         <input type="hidden" name="_next" value="https://yarosim.github.io/ai-visibility-snapshot/thank-you.html?form=ask">
-        <input type="hidden" name="Form" value="Question">
+        <input type="hidden" name="form_type" value="question">
+        <input type="hidden" name="intake_json" value="">
         <input type="hidden" name="Page" value="https://yarosim.github.io/ai-visibility-snapshot/">
         <div class="fields">
           <div class="field">
             <label for="ask-name">Name <span class="req" aria-hidden="true">*</span></label>
-            <input id="ask-name" name="Name" type="text" autocomplete="name" required maxlength="200">
+            <input id="ask-name" name="name" type="text" autocomplete="name" required maxlength="200">
           </div>
           <div class="field">
             <label for="ask-email">Work email <span class="req" aria-hidden="true">*</span></label>
@@ -288,16 +326,16 @@
           </div>
           <div class="field">
             <label for="ask-company">Company <span class="req" aria-hidden="true">*</span></label>
-            <input id="ask-company" name="Company" type="text" autocomplete="organization" required maxlength="200">
+            <input id="ask-company" name="company" type="text" autocomplete="organization" required maxlength="200">
           </div>
           <div class="field">
             <label for="ask-message">Message <span class="req" aria-hidden="true">*</span></label>
-            <textarea id="ask-message" name="Message" required maxlength="5000"></textarea>
+            <textarea id="ask-message" name="message" required maxlength="5000"></textarea>
           </div>
         </div>
         <div class="form-status" role="status" aria-live="polite" tabindex="-1"></div>
         <button class="btn" type="submit">Send question</button>
-        <p class="fine">Or email <a href="mailto:pnsgloballlc@gmail.com?subject=AI%20Visibility%20Snapshot%20question">pnsgloballlc@gmail.com</a></p>
+        <p class="fine">Or email <a href="mailto:pnsgloballlc@gmail.com?subject=%5BQUESTION%5D">pnsgloballlc@gmail.com</a></p>
         <p class="hp" aria-hidden="true">
           <label for="ask-hp">Leave this field blank</label>
           <input id="ask-hp" name="_honey" type="text" tabindex="-1" autocomplete="off" value="">
@@ -308,29 +346,35 @@
       <h2 class="form-title" id="mini-title">Get the free mini-check</h2>
       <p>If you’d rather start smaller, send your name, email, and company website. We’ll reply with a free mini-check from public pages: a short note, not the 15–20 prompt Snapshot, and not a promise that any engine will name your firm.</p>
       <form class="lead-form" data-form="mini" action="https://formsubmit.co/pnsgloballlc@gmail.com" method="POST" accept-charset="UTF-8" aria-labelledby="mini-title">
-        <input type="hidden" name="_subject" value="Free mini-check request">
+        <input type="hidden" name="_subject" value="[MINI-CHECK]">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_autoresponse" value="Thanks, we received your mini-check request. We’ll reply to this email. This is not the full Snapshot, and it is not a promise that any AI engine will name your firm.">
         <input type="hidden" name="_next" value="https://yarosim.github.io/ai-visibility-snapshot/thank-you.html?form=mini">
-        <input type="hidden" name="Form" value="Free mini-check">
+        <input type="hidden" name="form_type" value="mini_check">
+        <input type="hidden" name="intake_json" value="">
         <input type="hidden" name="Page" value="https://yarosim.github.io/ai-visibility-snapshot/">
         <div class="fields">
           <div class="field">
             <label for="mini-name">Name <span class="req" aria-hidden="true">*</span></label>
-            <input id="mini-name" name="Name" type="text" autocomplete="name" required maxlength="200">
+            <input id="mini-name" name="name" type="text" autocomplete="name" required maxlength="200">
           </div>
           <div class="field">
             <label for="mini-email">Email <span class="req" aria-hidden="true">*</span></label>
             <input id="mini-email" name="email" type="email" autocomplete="email" required maxlength="200">
           </div>
           <div class="field">
+            <label for="mini-company">Company <span class="fine">(optional)</span></label>
+            <input id="mini-company" name="company" type="text" autocomplete="organization" maxlength="200">
+          </div>
+          <div class="field">
             <label for="mini-website">Company website <span class="req" aria-hidden="true">*</span></label>
-            <input id="mini-website" name="Company website" type="text" inputmode="url" autocomplete="url" placeholder="https://yourfirm.com" required maxlength="300">
+            <input id="mini-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="https://yourfirm.com" required maxlength="300">
           </div>
         </div>
         <div class="form-status" role="status" aria-live="polite" tabindex="-1"></div>
         <button class="btn" type="submit">Get the free mini-check</button>
-        <p class="fine">Or email <a href="mailto:pnsgloballlc@gmail.com?subject=Free%20mini-check%20request">pnsgloballlc@gmail.com</a></p>
+        <p class="fine">Or email <a href="mailto:pnsgloballlc@gmail.com?subject=%5BMINI-CHECK%5D">pnsgloballlc@gmail.com</a></p>
         <p class="hp" aria-hidden="true">
           <label for="mini-hp">Leave this field blank</label>
           <input id="mini-hp" name="_honey" type="text" tabindex="-1" autocomplete="off" value="">
