@@ -4,6 +4,8 @@ Static landing site for the $497 Federal AI Visibility Snapshot, from the team b
 
 **https://yarosim.github.io/ai-visibility-snapshot/**
 
+This repository is public, and GitHub Pages publishes every file on `main`. [SECURITY.md](SECURITY.md) is the rule for what must never be committed: secret keys, customer submissions, inbox exports, and internal notes.
+
 In the repo on GitHub: Settings → Pages → Build and deployment → Deploy from a branch → `main` → `/ (root)`.
 
 ## What’s in the root
@@ -82,15 +84,13 @@ Reply-To on each submission is the customer’s email (`_replyto`, set from the 
 
 ## Automation contract
 
-An agent reads pnsgloballlc@gmail.com, picks out these messages, and runs delivery. Search Gmail by the subject prefix. The prefix is fixed. JavaScript appends one identifier after it.
+Subjects and field names are fixed so a submission can be matched to the right request. JavaScript appends one identifier after the prefix. These are the public form fields. They are not account credentials.
 
 | Form | `form_type` | Subject |
 |---|---|---|
 | Snapshot intake | `snapshot_order` | `[SNAPSHOT-ORDER] <company>` |
 | Free mini-check | `mini_check` | `[MINI-CHECK] <website>` |
 | Question | `question` | `[QUESTION] <name>` |
-
-Gmail queries: `subject:[SNAPSHOT-ORDER]`, `subject:[MINI-CHECK]`, `subject:[QUESTION]`.
 
 Without JavaScript the subject is only the prefix (`[SNAPSHOT-ORDER]`, `[MINI-CHECK]`, or `[QUESTION]`). The same prefixes are on the mailto fallback under each form.
 
@@ -150,7 +150,7 @@ Example `intake_json`:
 }
 ```
 
-If `intake_json` is empty, the message was sent without JavaScript. Read the individual fields instead. Ignore FormSubmit fields that start with `_`, and the `Page` field. Those are not intake keys.
+If `intake_json` is empty, the message was sent without JavaScript. The individual fields are still in the message. Ignore FormSubmit fields that start with `_`, and the `Page` field. Those are not intake keys.
 
 The `intake_json` value is a JSON string. If the email body HTML-escapes it (`&quot;` for quotes), unescape that, then parse.
 
