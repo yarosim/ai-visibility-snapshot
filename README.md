@@ -12,7 +12,7 @@ In the repo on GitHub: Settings → Pages → Build and deployment → Deploy fr
 |---|---|
 | `index.html` | Sales page, question form, Snapshot intake, free mini-check |
 | `privacy.html` | What the forms collect |
-| `thank-you.html` | Page FormSubmit opens after a no-JavaScript submit |
+| `thank-you.html` | Form confirmation, and the Stripe return page when `paid=1` |
 | `config.js` | The only place to set the checkout URL |
 | `site.js` | Payment-link switch and form handler |
 | `styles.css` | Layout |
@@ -25,29 +25,23 @@ Canonical and Open Graph URLs point at the GitHub Pages address above.
 
 ## Set PAYMENT_LINK
 
-1. Open `config.js`.
-2. Set `PAYMENT_LINK` to the full checkout URL, including `https://`.
+The live $497 Stripe Payment Link is already set in `config.js`:
 
 ```javascript
 window.SITE_CONFIG = {
-  PAYMENT_LINK: "https://buy.stripe.com/your-link"
+  PAYMENT_LINK: "https://buy.stripe.com/cNi5kD1nS1SQ9bI47a2Ji27"
 };
 ```
 
-3. Commit that change and push it to `main`.
+That checkout collects Company name and Company website. After payment, Stripe redirects to:
 
-Leave the value as `""` until the link exists. Anything that is not an `http` or `https` URL is ignored.
+https://yarosim.github.io/ai-visibility-snapshot/thank-you.html?paid=1
 
-While `PAYMENT_LINK` is empty:
+That address shows a payment-received note, says the receipt and invoice come from Stripe, and links to the intake form. The 48-hour clock starts when the intake is complete. Form submissions still use `thank-you.html?form=order`, `?form=ask`, or `?form=mini`, without `paid=1`.
 
-- Every “Get my Snapshot, $497” button opens the intake form (`#order`).
-- The Service structured data has no `offers.url`.
+“Get my Snapshot, $497” opens this checkout link in a new tab. The intake form stays on the page (`#order`). `site.js` adds `offers.url` to the Service JSON-LD in the browser.
 
-After you set a URL:
-
-- Those buttons open checkout in a new tab.
-- The intake form stays on the page (the pricing card, the footer, and `#order`).
-- `site.js` adds `offers.url` to the Service JSON-LD in the browser. Crawlers that don’t run JavaScript keep seeing the offer without a URL, which is correct until you want that URL in the raw HTML too. One config value is enough for the buttons.
+To point the buttons somewhere else, replace `PAYMENT_LINK` with a full `http` or `https` URL and push to `main`. An empty string, or anything that is not an `http(s)` URL, sends those buttons to the intake form instead. The Service structured data then has no `offers.url`.
 
 ## Forms
 
