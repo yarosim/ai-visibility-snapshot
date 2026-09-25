@@ -47,120 +47,11 @@ To point the buttons somewhere else, replace `PAYMENT_LINK` with a full `http` o
 
 ## Forms
 
-Every form is meant to reach **pnsgloballlc@gmail.com**.
+The page has three forms: a question, the Snapshot intake, and the free mini-check. Each one is delivered by [FormSubmit.co](https://formsubmit.co/) to **pnsgloballlc@gmail.com**, and each one includes a normal email link to that address if the form does not send.
 
-The handler is [FormSubmit.co](https://formsubmit.co/). With JavaScript, the page posts to:
+FormSubmit does not deliver mail until that inbox confirms the address once. Do that from the live site after deploy. A local test can send the same confirmation, so use the email links when you only want to look at the page.
 
-`https://formsubmit.co/ajax/pnsgloballlc@gmail.com`
-
-Without JavaScript, the same form posts to `https://formsubmit.co/pnsgloballlc@gmail.com` and FormSubmit redirects to `thank-you.html`.
-
-Each form has:
-
-- A hidden `_honey` field. If it is filled, the browser does not send the form, and FormSubmit drops it if it arrives anyway.
-- A success or error message on the page (`role="status"`).
-- A `mailto:pnsgloballlc@gmail.com` link under the button.
-
-The three forms are a question, the Snapshot intake, and the free mini-check. Field names, subjects, and the JSON block are specified under Automation contract.
-
-### Activate FormSubmit once, after deploy
-
-FormSubmit will not deliver mail until the inbox confirms the address. Do this yourself after the site is live. Don’t expect a test from this repo to have triggered it.
-
-1. Open the live page and submit one form with a real note (any of the three).
-2. Check **pnsgloballlc@gmail.com** for FormSubmit’s activation message.
-3. Open the activation link in that message.
-4. Submit once more and confirm the message lands in that inbox.
-
-Until that link is clicked, the form’s error text will say that activation is still required. The mailto link under the form works either way.
-
-`_captcha` is `false` so the on-page success message isn’t replaced by a captcha redirect. The honeypot is the spam guard. If spam gets through, set the hidden `_captcha` field on each form to `true`.
-
-Reply-To on each submission is the customer’s email (`_replyto`, set from the `email` field when JavaScript runs; the field is also named `email` for the no-JavaScript post). FormSubmit’s `_autoresponse` sends the customer a short receipt:
-
-- Snapshot order: `Thanks, we received your request. Your Snapshot is delivered within 48 hours of a completed intake and payment. Reply to this email with any questions.`
-- Question: `Thanks, we received your question. Reply to this email if you need to add anything.`
-- Mini-check: `Thanks, we received your mini-check request. We’ll reply to this email. This is not the full Snapshot, and it is not a promise that any AI engine will name your firm.`
-
-## Automation contract
-
-Subjects and field names are fixed so a submission can be matched to the right request. JavaScript appends one identifier after the prefix. These are the public form fields. They are not account credentials.
-
-| Form | `form_type` | Subject |
-|---|---|---|
-| Snapshot intake | `snapshot_order` | `[SNAPSHOT-ORDER] <company>` |
-| Free mini-check | `mini_check` | `[MINI-CHECK] <website>` |
-| Question | `question` | `[QUESTION] <name>` |
-
-Without JavaScript the subject is only the prefix (`[SNAPSHOT-ORDER]`, `[MINI-CHECK]`, or `[QUESTION]`). The same prefixes are on the mailto fallback under each form.
-
-### Snapshot order fields
-
-These `name` attributes are the intake keys. Required: `company`, `website`, `service`, `naics`, `cert`, `agency`, `contact_name`, `email`, `consent`.
-
-| Key | Required | Notes |
-|---|---|---|
-| `company` | yes | |
-| `legal_name` | no | |
-| `website` | yes | |
-| `uei` | no | SAM Unique Entity ID |
-| `city_state` | no | |
-| `service` | yes | Main service in plain words |
-| `service_2` | no | Second service |
-| `naics` | yes | 6-digit primary NAICS |
-| `cert` | yes | One of: `8(a)`, `SDVOSB`, `WOSB`, `EDWOSB`, `HUBZone`, `Small business / none`, `Other` |
-| `region` | no | |
-| `agency` | yes | Main target agency |
-| `vehicle` | no | Contract vehicles |
-| `competitor` | no | Up to 3, comma-separated |
-| `problem` | no | Buyer problem they solve |
-| `contact_name` | yes | |
-| `email` | yes | Also used as Reply-To |
-| `phone` | no | |
-| `consent` | yes | `yes` when the box is checked |
-
-Also sent on this form:
-
-- `form_type` = `snapshot_order`
-- `intake_date` = ISO-8601 UTC timestamp, filled by JavaScript on submit (`YYYY-MM-DDTHH:mm:ss.sssZ`)
-- `intake_json` = one JSON object, filled by JavaScript, with exactly the keys in the table above, in that order. Missing optional answers are empty strings. `consent` is `"yes"`.
-
-Example `intake_json`:
-
-```json
-{
-  "company": "Example Federal LLC",
-  "legal_name": "",
-  "website": "https://example.com",
-  "uei": "",
-  "city_state": "Arlington, VA",
-  "service": "cybersecurity monitoring",
-  "service_2": "",
-  "naics": "541512",
-  "cert": "SDVOSB",
-  "region": "",
-  "agency": "Department of Veterans Affairs",
-  "vehicle": "",
-  "competitor": "Firm A, Firm B",
-  "problem": "",
-  "contact_name": "Ada Lovelace",
-  "email": "ada@example.com",
-  "phone": "",
-  "consent": "yes"
-}
-```
-
-If `intake_json` is empty, the message was sent without JavaScript. The individual fields are still in the message. Ignore FormSubmit fields that start with `_`, and the `Page` field. Those are not intake keys.
-
-The `intake_json` value is a JSON string. If the email body HTML-escapes it (`&quot;` for quotes), unescape that, then parse.
-
-### Mini-check
-
-`form_type` is `mini_check`. `intake_json` keys, in order: `name`, `email`, `website`, `company`. Required on the form: `name`, `email`, `website`. `company` may be an empty string.
-
-### Question
-
-`form_type` is `question`. `intake_json` keys, in order: `name`, `email`, `company`, `message`. All four are required. There is no `intake_date` on this form or the mini-check.
+How messages are sorted, and how spam is filtered, stays off this public repository. See [SECURITY.md](SECURITY.md).
 
 ## Custom domain later
 
@@ -171,7 +62,7 @@ A hostname such as `snapshot.govcontrack.org` can be the GitHub Pages custom dom
 1. In the repo, add a `CNAME` file whose only line is that hostname.
 2. Settings → Pages → Custom domain → save it, then wait until the certificate is ready.
 3. At the DNS host for govcontrack.org, add a `CNAME` record from that host to `yarosim.github.io`.
-4. Update the canonical URL, `og:url`, `sitemap.xml` `<loc>` values, and each form’s `_next` address so they use the new origin.
+4. Update the canonical URL, `og:url`, `sitemap.xml` `<loc>` values, and the thank-you address on each form so they use the new origin.
 
 ### A path on govcontrack.org
 

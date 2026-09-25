@@ -25,6 +25,14 @@ if git grep -I -n -E "$pattern" -- . ':!scripts/check-no-secrets.sh'; then
   fail=1
 fi
 
+# Public docs must not carry the mail-routing runbook. The form pages still
+# contain the fields the customer site needs; this check covers the docs only.
+docs_pattern='intake_json|_honey|_captcha|SNAPSHOT-ORDER|MINI-CHECK|\[QUESTION\]|form_type|_autoresponse|_replyto'
+if git grep -I -n -E "$docs_pattern" -- README.md SECURITY.md; then
+  echo "Public docs include mail-routing or anti-spam internals. Keep those off GitHub."
+  fail=1
+fi
+
 if [[ "$fail" -ne 0 ]]; then
   exit 1
 fi
