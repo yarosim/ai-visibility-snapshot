@@ -43,20 +43,29 @@
     });
   }
 
-  var thanks = document.getElementById("thanks-detail");
-  if (thanks) {
-    var kind = "";
-    try {
-      kind = new URLSearchParams(window.location.search).get("form") || "";
-    } catch (err) {
-      kind = "";
+  var params;
+  try {
+    params = new URLSearchParams(window.location.search);
+  } catch (err) {
+    params = new URLSearchParams();
+  }
+  var thanksPaid = document.getElementById("thanks-paid");
+  var thanksForm = document.getElementById("thanks-form");
+  if (params.get("paid") === "1" && thanksPaid && thanksForm) {
+    thanksForm.hidden = true;
+    thanksPaid.hidden = false;
+    document.title = "Payment received | Federal AI Visibility Snapshot";
+  } else {
+    var thanks = document.getElementById("thanks-detail");
+    if (thanks) {
+      var kind = params.get("form") || "";
+      var thanksCopy = {
+        ask: "Your question is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered.",
+        order: "Your Snapshot intake is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered. The report is delivered within 48 hours of a completed intake and payment. Pay through the secure checkout link if you have not yet.",
+        mini: "Your free mini-check request is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered with a short note from public pages, not the full Snapshot."
+      };
+      if (thanksCopy[kind]) thanks.textContent = thanksCopy[kind];
     }
-    var thanksCopy = {
-      ask: "Your question is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered.",
-      order: "Your Snapshot intake is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered. The report is delivered within 48 hours of the completed intake form. If the $497 still needs to be arranged, that reply will cover it.",
-      mini: "Your free mini-check request is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered with a short note from public pages, not the full Snapshot."
-    };
-    if (thanksCopy[kind]) thanks.textContent = thanksCopy[kind];
   }
 
   function showStatus(status, kind, message) {
@@ -180,7 +189,7 @@
           var formKey = form.getAttribute("data-form");
           var okCopy = {
             ask: "Thanks. Your question is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered.",
-            order: "Thanks. Your Snapshot intake is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered. Delivery is within 48 hours of this completed intake.",
+            order: "Thanks. Your Snapshot intake is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered. The report is delivered within 48 hours of a completed intake and payment.",
             mini: "Thanks. Your mini-check request is on its way to pnsgloballlc@gmail.com. We’ll reply to the email you entered."
           };
           showStatus(status, "ok", okCopy[formKey] || okCopy.ask);
