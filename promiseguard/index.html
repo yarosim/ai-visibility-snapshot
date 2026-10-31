@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PromiseGuard: catch wrong prices, phones and retired promises on client sites</title><meta name="description" content="PromiseGuard checks your clients&#x27; websites against the business facts they approved, and flags mismatches with evidence. Free Promise Check for agencies.">
+<meta property="og:title" content="PromiseGuard: catch wrong prices, phones and retired promises on client sites"><meta property="og:description" content="PromiseGuard checks your clients&#x27; websites against the business facts they approved, and flags mismatches with evidence. Free Promise Check for agencies.">
+<link rel="canonical" href="https://yarosim.github.io/ai-visibility-snapshot/promiseguard/"><link rel="stylesheet" href="assets/style.css"><script src="assets/config.js"></script></head><body>
+<header class="top"><div class="wrap"><a class="logo" href="index.html">PromiseGuard</a><nav><a href="sample-report.html">Sample report</a><a href="index.html#pricing">Pricing</a><a href="blog/index.html">Blog</a><a href="request.html">Free Promise Check</a></nav></div></header>
+<main class="wrap">
+<section class="hero"><h1>Your client's site is up.<br>But is it still telling the truth?</h1>
+<p class="lead">Uptime monitors tell you a page loads. PromiseGuard checks whether it still says what your client approved: the right phone number, the right price, the right booking link, and none of the promises they've retired.</p>
+<p><a class="btn" href="request.html">Get a free Promise Check</a> &nbsp; <a class="btn alt" href="sample-report.html">See a sample report</a></p>
+<p class="note">For small web agencies managing 10–50 client sites. Early-stage: we're running founder-assisted pilots now.</p></section>
+<section><h2>The problem, in one report</h2><p>Here's what a check looks like on a fictional plumber's homepage. The site is online. Three things on it are wrong.</p><table><tr><th>Rule</th><th>Approved fact</th><th>Result</th><th>Evidence from the page</th></tr>
+<tr><td>Phone number</td><td>(555) 010-0200 must appear</td><td class="pass">PASS</td><td>"Call (555) 010-0200."</td></tr>
+<tr><td>Price</td><td>"Diagnostic visit $129" must appear</td><td class="review">REVIEW</td><td>Not found. Page says "Diagnostic visit $99."</td></tr>
+<tr><td>Retired promise</td><td>"24/7 emergency response" must NOT appear</td><td class="review">REVIEW</td><td>"We offer 24/7 emergency response."</td></tr>
+<tr><td>Booking link</td><td>Must link to https://example.com/book</td><td class="review">REVIEW</td><td>Only link found: https://example.com/old-booking</td></tr></table>
+<p class="note">Output of the open-source PromiseGuard prototype run on a fictional plumbing homepage (<code>demo_config.json</code>). All business data is fictional.</p></section>
+<section><h2>How it works</h2><div class="grid">
+<div class="card"><h3>1. Your client approves the facts</h3><p>Phone, prices, service area, booking URL, and any promises that must no longer appear, written down as simple rules.</p></div>
+<div class="card"><h3>2. We check the pages</h3><p>Each page is compared with those approved rules: required text, forbidden text, and exact link destinations.</p></div>
+<div class="card"><h3>3. You get exceptions with evidence</h3><p>A short report showing what failed and the exact text found, so your team can fix it before the client or a customer notices.</p></div></div></section>
+<section><h2>What it does and doesn't do (today)</h2><div class="grid">
+<div class="card"><h3>Does</h3><ul><li>Checks page text against approved required and forbidden phrases</li><li>Checks that links point to the exact approved destination</li><li>Produces timestamped reports with evidence</li></ul></div>
+<div class="card"><h3>Doesn't yet</h3><ul><li>Render JavaScript-heavy pages</li><li>Run fully self-serve on a schedule (pilots are founder-assisted)</li><li>Judge whether a claim is legally accurate; a REVIEW means "a person should look"</li></ul></div></div></section>
+<section id="pricing"><h2>Pricing</h2><div class="grid">
+<div class="card"><h3>Free Promise Check</h3><p class="price">$0</p><p>One client page checked against up to 5 facts you give us. Report by email.</p><a class="btn alt" href="request.html">Request</a></div>
+<div class="card"><h3>30-day assisted pilot</h3><p class="price">$49</p><p>Up to 5 client sites. We set up the approved-fact rules with you and send exception reports during the pilot.</p><a class="btn" data-pay="PILOT_PAYMENT_LINK" data-paylabel="Start pilot – $49" href="request.html?plan=pilot">Request pilot</a></div>
+<div class="card"><h3>Standard</h3><p class="price">$79<span style="font-size:1rem">/month</span></p><p>Up to 10 client sites, recurring checks and exception reports. Opening to pilot customers first.</p><a class="btn alt" data-pay="STANDARD_PAYMENT_LINK" data-paylabel="Subscribe – $79/mo" href="request.html?plan=standard">Join the list</a></div></div>
+<p class="note">No payment is taken on this site yet. "Request" buttons send us a message and we reply by email.</p></section>
+<section><h2>Free resources</h2><div class="grid">
+<div class="card"><h3>Website Promise Audit Checklist (PDF)</h3><p>A one-page checklist for auditing a client site's facts and promises.</p><a class="btn alt" href="downloads/Website-Promise-Audit-Checklist.pdf">Download free</a></div>
+<div class="card"><h3>Agency Promise Audit Template Pack</h3><p>Rule templates for 5 industries, an audit spreadsheet and a client-approval form.</p><a class="btn alt" href="template-pack.html">Details – $19</a></div></div></section>
+<section><h2>FAQ</h2>
+<details><summary>Isn't this just change detection?</summary><p>Change detection tells you a page changed. PromiseGuard checks a page against facts your client approved, so it can flag a wrong price that has been wrong for months, and stay quiet about harmless edits.</p></details>
+<details><summary>Do you need access to our clients' sites?</summary><p>No logins. We check public pages you authorize. We only check sites you manage or have permission to review.</p></details>
+<details><summary>Will it catch everything?</summary><p>No. It checks the rules you set up. A missing rule means a missing check, and formatting quirks can cause false alerts, which is why every result shows evidence for a person to review.</p></details>
+<details><summary>Is the code open?</summary><p>Yes, the prototype checker is MIT-licensed on GitHub. The pilot adds setup, rule-writing and reporting done with you.</p></details>
+<details><summary>Who's behind this?</summary><p>PromiseGuard is built by PNS Global LLC, a small independent company. We're in early validation and will tell you plainly what works and what doesn't.</p></details></section></main>
+<footer><div class="wrap">PromiseGuard is an early-stage tool in validation, built by PNS Global LLC. It is not production monitoring yet. Contact: pnsgloballlc@gmail.com · <a href="https://github.com/yarosim/promiseguard">Source (MIT)</a></div></footer></body></html>

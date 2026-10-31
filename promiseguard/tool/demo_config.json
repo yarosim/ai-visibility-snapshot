@@ -1,0 +1,30 @@
+{
+  "pages": [
+    {
+      "label": "Example Plumbing homepage (fictional)",
+      "file": "demo_page.html",
+      "rules": [
+        {
+          "id": "approved-phone",
+          "kind": "required_text",
+          "value": "(555) 010-0200"
+        },
+        {
+          "id": "approved-price",
+          "kind": "required_text",
+          "value": "Diagnostic visit $129"
+        },
+        {
+          "id": "retired-promise",
+          "kind": "forbidden_text",
+          "value": "24/7 emergency response"
+        },
+        {
+          "id": "booking-destination",
+          "kind": "required_link",
+          "value": "https://example.com/book"
+        }
+      ]
+    }
+  ]
+}

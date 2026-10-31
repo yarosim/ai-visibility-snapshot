@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yarosim.github.io/ai-visibility-snapshot/promiseguard/sitemap.xml

@@ -1,0 +1,14 @@
+// ===== PAYMENT CONFIG =====
+// When a live Stripe Payment Link exists, paste it below. Until then,
+// buttons fall back to the "Request pilot" form (no payment is taken).
+window.PG_CONFIG = {
+  PILOT_PAYMENT_LINK: "",      // e.g. "https://buy.stripe.com/xxxx" ($49 30-day pilot)
+  STANDARD_PAYMENT_LINK: "",   // e.g. "https://buy.stripe.com/yyyy" ($79/month)
+  TEMPLATE_PACK_LINK: ""       // e.g. Gumroad/Stripe link ($19 template pack)
+};
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll("[data-pay]").forEach(function(a){
+    var l=window.PG_CONFIG[a.getAttribute("data-pay")];
+    if(l){a.href=l;a.textContent=a.getAttribute("data-paylabel")||a.textContent;}
+  });
+});

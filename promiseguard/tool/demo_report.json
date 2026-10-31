@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-31T13:39:24.337827+00:00",
+  "mode": "local_saved_html",
+  "results": [
+    {
+      "page": "Example Plumbing homepage (fictional)",
+      "findings": [
+        {
+          "id": "approved-phone",
+          "status": "PASS",
+          "kind": "required_text",
+          "expected": "(555) 010-0200",
+          "evidence": "Example Plumbing Call (555) 010-0200. Diagnostic visit $99. We offer 24/7 emergency response. Bo"
+        },
+        {
+          "id": "approved-price",
+          "status": "REVIEW",
+          "kind": "required_text",
+          "expected": "Diagnostic visit $129",
+          "evidence": "Required text not found in parsed HTML."
+        },
+        {
+          "id": "retired-promise",
+          "status": "REVIEW",
+          "kind": "forbidden_text",
+          "expected": "24/7 emergency response",
+          "evidence": "lumbing Call (555) 010-0200. Diagnostic visit $99. We offer 24/7 emergency response. Book now"
+        },
+        {
+          "id": "booking-destination",
+          "status": "REVIEW",
+          "kind": "required_link",
+          "expected": "https://example.com/book",
+          "evidence": "Exact href absent; observed links: ['https://example.com/old-booking']"
+        }
+      ]
+    }
+  ]
+}
