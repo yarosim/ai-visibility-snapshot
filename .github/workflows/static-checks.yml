@@ -1,0 +1,45 @@
+# Static checks for GitHub Pages sites (yarosim). $0: uses only free public actions.
+name: static-checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 13 * * 1"   # weekly re-scan, Mondays 13:00 UTC (8-9 AM ET)
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Secret scan (gitleaks CLI, full history)
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz | tar xz gitleaks
+          ./gitleaks git . --redact --no-banner --exit-code 1
+      - name: Block Stripe/API secrets in client code
+        run: |
+          if grep -rIEn '(sk|rk)_(live|test)_[A-Za-z0-9]{10,}|whsec_[A-Za-z0-9]{10,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35}|ghp_[A-Za-z0-9]{36}' --exclude-dir=.git .; then echo "::error::secret-like string found"; exit 1; fi
+      - name: Block paid files at public paths
+        run: |
+          if git ls-files | grep -E '(^|/)(thanks-[0-9a-f]+|dl/[0-9a-f]{16,})/.*\.(pdf|zip|xlsx|ods|docx)$'; then if [ -f .paygate-live ]; then echo "::error::paid file committed to a public path; deliver via paygate"; exit 1; else echo "::warning::paid files still public; becomes blocking once .paygate-live exists"; fi; fi
+      - name: External scripts must have SRI
+        run: |
+          bad=$(grep -rIEho '<script[^>]+src="https?://[^"]+"[^>]*>' --include=*.html . | grep -v 'integrity=' || true)
+          if [ -n "$bad" ]; then echo "$bad"; echo "::error::external script without integrity="; exit 1; fi
+      - name: CSP meta present
+        run: |
+          miss=$(grep -rIL 'Content-Security-Policy' --include=*.html . | grep -v '/tradebpt/' || true)
+          if [ -n "$miss" ]; then echo "$miss"; echo "::warning::pages without CSP meta"; fi
+      - name: HTML validation
+        run: |
+          pip install --quiet html5validator
+          html5validator --root . --also-check-css --ignore-re 'tradebpt' 'Attribute "(loading|fetchpriority)"' || echo "::warning::HTML validator findings (non-blocking)"
+      - name: Link check (lychee)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --accept 200,206,403,429 --exclude 'buy\.stripe\.com' --exclude 'formsubmit\.co' --exclude 'example\.com' './**/*.html'
+          fail: true
