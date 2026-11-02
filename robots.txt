@@ -2,60 +2,79 @@
 # Named groups are listed so each bot's own stanza allows the site.
 
 User-agent: *
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: GPTBot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: ChatGPT-User
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: OAI-SearchBot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Google-Extended
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: GoogleOther
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: PerplexityBot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Perplexity-User
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: ClaudeBot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Claude-User
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: anthropic-ai
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Applebot-Extended
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: CCBot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Bytespider
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: cohere-ai
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Amazonbot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Meta-ExternalAgent
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: FacebookBot
+Disallow: /characters/dl-
 Allow: /
 
 User-agent: Diffbot
+Disallow: /characters/dl-
 Allow: /
 
 Sitemap: https://yarosim.github.io/ai-visibility-snapshot/sitemap.xml
