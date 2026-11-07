@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co https://buy.stripe.com; frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to audit a client website for outdated prices | PromiseGuard</title><meta name="description" content="A practical agency checklist for finding wrong or stale prices on client pages, getting owner sign-off, and checking pages against approved figures.">
+<meta property="og:title" content="How to audit a client website for outdated prices | PromiseGuard"><meta property="og:description" content="A practical agency checklist for finding wrong or stale prices on client pages, getting owner sign-off, and checking pages against approved figures.">
+<link rel="canonical" href="https://yarosim.github.io/ai-visibility-snapshot/promiseguard/blog/how-to-audit-client-website-outdated-prices.html"><link rel="stylesheet" href="../assets/style.css"><script src="../assets/config.js"></script></head><body>
+<header class="top"><div class="wrap"><a class="logo" href="../index.html">PromiseGuard</a><nav><a href="../sample-report.html">Sample report</a><a href="../index.html#pricing">Pricing</a><a href="../blog/index.html">Blog</a><a href="../request.html">Free Promise Check</a></nav></div></header>
+<main class="wrap"><article style="max-width:720px"><section class="hero"><h1>How to audit a client website for outdated prices</h1><p class="note">PromiseGuard blog · Nov 7, 2026</p></section>
+<p>Wrong prices on a client site rarely take the site down. The SSL still works, the homepage still loads, and the care-plan uptime check stays green. The damage shows up later: a customer books at a price the shop no longer charges, the owner blames the agency, and nobody can point to a written list of what was approved.</p>
+<p>This post is a practical audit you can run in one sitting for a local-service client (plumber, HVAC, dentist, salon, contractor). It focuses on prices and "starting at" figures. It is not legal advice.</p>
+
+<h2>Why price drift is common</h2>
+<p>Owners change prices on invoices, in the truck, or on a paper board long before anyone edits the website. Landing pages built for old ads keep the old "from $X" line. Holiday coupons expire and stay published. A care-plan retainer that only covers uptime and plugin updates will not catch any of that.</p>
+<p>US advertising rules also care about truthful pricing. The FTC's Guides Against Deceptive Pricing explain that advertised price comparisons have to rest on genuine figures, not made-up "was" prices (<a href="https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-233">16 CFR Part 233</a>, accessed Nov 7, 2026). Separately, the FTC's <a href="https://search.ftc.gov/system/files/documents/plain-language/bus41-dot-com-disclosures-information-about-online-advertising.pdf">.com Disclosures (FTC PDF)</a> guidance says online ads must be truthful and not misleading, with clear disclosures when needed (accessed Nov 7, 2026). Your job as the agency is not to practice law for the client; it is to keep the site matched to what the owner says is current.</p>
+
+<h2>Step 1: Collect every public price claim</h2>
+<p>Open the live site (and any ad landing pages you manage) and list every price-like claim you can see:</p>
+<ul>
+<li>Exact prices ("Diagnostic visit $99")</li>
+<li>"Starting at" / "from" / "as low as" figures</li>
+<li>Package tiers and monthly retainers shown on the site</li>
+<li>New-patient or first-visit specials</li>
+<li>Coupons and "this month only" deals, including end dates if shown</li>
+<li>Financing teaser lines tied to a dollar amount ("$0 down")</li>
+</ul>
+<p>Check the homepage, header/footer, service pages, location pages, and any page that ads still send traffic to. Write the exact string you found, the URL, and the date you looked.</p>
+
+<h2>Step 2: Get the owner to approve today's prices</h2>
+<p>Send a short list and ask three questions in writing:</p>
+<ol>
+<li>Which of these figures are still correct?</li>
+<li>What should each wrong figure say instead?</li>
+<li>Which offers are retired and must not appear anywhere?</li>
+</ol>
+<p>Save the reply with a date. That list becomes the source of truth for the site and for your next care-plan review. A lightweight client fact-approval form is enough; the free <a href="../downloads/Website-Promise-Audit-Checklist.pdf">Website Promise Audit Checklist</a> covers the same idea for prices plus phones, hours, and booking links.</p>
+
+<h2>Step 3: Turn approvals into checkable rules</h2>
+<p>For each approved price, define a simple rule:</p>
+<ul>
+<li><b>Required text</b> — the exact phrase that must appear (for example, <code>Diagnostic visit $129</code>).</li>
+<li><b>Forbidden text</b> — the old or retired phrase that must not appear (for example, <code>Diagnostic visit $99</code> or an expired coupon line).</li>
+</ul>
+<p>Keep the wording identical to what the owner approved. Close-enough paraphrases create false confidence.</p>
+
+<h2>Step 4: Check the saved HTML, not your memory</h2>
+<p>For each important page, save the HTML (browser: File → Save Page As, HTML only) and search for the required and forbidden strings. PromiseGuard's open checker does the same thing with a small JSON rule file: required text, forbidden text, and exact link destinations, against saved HTML only (no JavaScript rendering). A sample run on a fictional plumbing page is on the <a href="../sample-report.html">sample report</a>.</p>
+<p>Mark each rule PASS or REVIEW. REVIEW means a person should look; it is not proof the business is doing something wrong.</p>
+
+<h2>Step 5: Fix, then re-check</h2>
+<p>Confirm every REVIEW with the client before you edit. Update the page, save the HTML again, and re-run the same rules. Log the approval date and set a next review (quarterly works for most local businesses; sooner if they change prices often).</p>
+
+<h2>A one-hour care-plan add-on</h2>
+<p>If you already sell a website care plan, fold this in as a quarterly "promise / price check":</p>
+<ol>
+<li>15 minutes: pull the approved price list (or refresh it with the owner).</li>
+<li>30 minutes: check homepage + top service/landing pages against the list.</li>
+<li>15 minutes: send a short exception report with evidence and ask for confirmations.</li>
+</ol>
+<p>That is the difference between "we kept the site online" and "we kept the published prices aligned with what you approved."</p>
+
+<h2>What this audit does not do</h2>
+<ul>
+<li>It does not judge whether a price is fair or legally compliant for that industry.</li>
+<li>It does not replace counsel if the client has a deceptive-pricing concern.</li>
+<li>It does not magically catch prices only shown inside images, PDFs, or heavy client-side JavaScript unless you also check those surfaces by hand.</li>
+</ul>
+
+<p>Want a free Promise Check on one client page (up to five approved facts)? <a href="../request.html">Request one here</a>. Or start from the free checklist and the <a href="../template-pack.html">Agency Promise Audit Template Pack</a>.</p>
+<p><a class="btn" href="../request.html">Get a free Promise Check</a></p>
+<p class="note">Sources: <a href="https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-233">FTC Guides Against Deceptive Pricing, 16 CFR Part 233</a> (accessed Nov 7, 2026); <a href="https://search.ftc.gov/system/files/documents/plain-language/bus41-dot-com-disclosures-information-about-online-advertising.pdf">FTC .com Disclosures (PDF)</a> (accessed Nov 7, 2026). Not legal advice.</p>
+</article></main>
+<footer><div class="wrap">PromiseGuard is an early-stage tool in validation, built by PNS Global LLC. It is not production monitoring yet. Contact: pnsgloballlc@gmail.com · <a href="mailto:pnsgloballlc@gmail.com?subject=PromiseGuard">Email us</a></div></footer></body></html>
